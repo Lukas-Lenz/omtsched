@@ -15,27 +15,27 @@ void getZebra(omtsched::Problem<std::string> &simple) {
     using ZebraComponents;
 
     for (std::string str: {"Yellow", "Blue", "Red", "Ivory", "Green"})
-        simple.newComponent(str, COLOUR);
+        const Component<ID>& colourC = simple.newComponent(str, COLOUR);
 
     for (std::string str: {"English", "Spanish", "Norwegian", "Ukrainian", "Japanese"})
-        simple.newComponent(str, NATIONALITY);
+        const Component<ID>& nationalityC = simple.newComponent(str, NATIONALITY);
 
     for (std::string str: {"Water", "Tea", "Milk", "Orange Juice", "Coffee"})
-        simple.newComponent(str, DRINK);
+        const Component<ID>& drinkC = simple.newComponent(str, DRINK);
 
     for (std::string str: {"Kools", "Chesterfields", "Lucky Strike", "Parliaments", "Old Gold"})
-        simple.newComponent(str, SMOKE);
+        const Component<ID>& smokeC = simple.newComponent(str, SMOKE);
 
     for (std::string str: {"Zebra", "Fox", "Horse", "Snails", "Dog"})
-        simple.newComponent(str, PET);
+        const Component<ID>& petC = simple.newComponent(str, PET);
 
     for (std::string str : {"1", "2", "3", "4", "5"})
-        simple.newOrderedComponent(str, POSITION, std::stoi(str));
+        const Component<ID>& positionC = simple.newOrderedComponent(str, POSITION, std::stoi(str));
 
     simple.addRule(uniqueComponents(true)); // implicit
 
-    AssignmentSet house;
-    house.addComponent([POSITION, COLOUR, NATIONALITY, DRINK, SMOKE, PET]);
+    AssignmentBase house;
+    house.addComponent({ colourC, nationalityC, drinkC, smokeC, petC, positionC });
 
     simple.createAssignments(house, 5);
     simple.addRule(distinct<>(house, POSITION));
